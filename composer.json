@@ -1,0 +1,27 @@
+{
+    "name": "wonder/gus-app",
+    "type": "project",
+    "authors": [
+        {
+            "name": "WilliamOnyejiaka",
+            "email": "williamonyejiaka08062528003@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Model\\": "src/models/",
+            "Service\\":"src/services/",
+            "Util\\": "src/utils/",
+            "Controller\\": "src/controllers/",
+            "Route\\": "src/routes/",
+            "Middleware\\": "src/middlewares/",
+            "Repo\\": "src/repos/",
+            "App\\": "src/bin/"
+        }
+    },
+    "minimum-stability": "dev",
+    "require": {
+        "william-onyejiaka/php-ral": "dev-main",
+        "firebase/php-jwt": "dev-main"
+    }
+}
