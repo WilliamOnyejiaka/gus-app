@@ -24,6 +24,27 @@ class ImageController
 
     public function create(Request $req, Response $res)
     {
+
+        function something($url){
+            if (file_exists($url)) {
+                list($width, $height) = getimagesize($url);
+                $aspectRatio = $width / $height;
+
+                // Define thresholds
+                $isWide = $aspectRatio > 1.5;       // Wider than 3:2
+                $isTall = $aspectRatio < 0.67;      // Taller than 2:3
+                $isBig = $width >= 600 && $height >= 600; // Large in both dimensions
+                $isNormal = !$isWide && !$isTall && !$isBig; // Neither wide, tall, nor big
+
+
+                // Determine the class
+                if ($isBig) return "big";
+                if ($isWide) return 'wide';
+                if ($isTall) return 'tall';
+                if($isNormal) return 'normal';
+            }
+            return null;
+        }
         $name = (string) $req->body('name');
         $description = (string) $req->body('description');
         $image = $req->file('image');
@@ -36,7 +57,10 @@ class ImageController
         }
 
         $result = $this->service->create($name, $description, $image);
-        $res->json($result['json'], $result['statusCode']);
+        $res->json([
+            'data' => $result['json'],
+            'testing' => something("./..".$result['json']['data']['url'])
+        ], $result['statusCode']);
     }
 
     public function read(Request $req, Response $res)
